@@ -128,7 +128,7 @@ public class BraveSyncScreensPreference extends BravePreferenceFragment
     private Button mDeleteAccountButton;
     private Button mNewCodeWordsButton;
     private Button mNewQrCodeButton;
-    private TextView mBraveSyncCustomSyncUrl;
+    private TextView mBraveReadOnlySyncUrlView;
     private TextView mBraveSyncTextDevicesTitle;
     private TextView mBraveSyncWordCountTitle;
     private TextView mBraveSyncAddDeviceCodeWords;
@@ -338,8 +338,11 @@ public class BraveSyncScreensPreference extends BravePreferenceFragment
                 }
             }
 
-            // TODO: Check and hide if custom sync URL is empty
-            mBraveSyncCustomSyncUrl.setText(getBraveSyncWorker().getSyncServiceURL());
+            LinearLayout customSyncUrlReadOnlyLayout = getView().findViewById(R.id.brave_read_only_sync_url_layout);
+            if (!sCustomSyncServiceUrl.isEmpty()) {
+                mBraveReadOnlySyncUrlView.setText(sCustomSyncServiceUrl);
+                customSyncUrlReadOnlyLayout.setVisibility(View.VISIBLE);
+            }
 
             if (index > 0) {
                 mBraveSyncTextDevicesTitle.setText(
@@ -450,7 +453,7 @@ public class BraveSyncScreensPreference extends BravePreferenceFragment
             mCopyButton.setOnClickListener(this);
         }
 
-        mBraveSyncCustomSyncUrl = getView().findViewById(R.id.brave_sync_url_display);
+        mBraveReadOnlySyncUrlView = getView().findViewById(R.id.brave_read_only_sync_url_view);
         mBraveSyncTextDevicesTitle = getView().findViewById(R.id.brave_sync_devices_title);
         mBraveSyncWordCountTitle = getView().findViewById(R.id.brave_sync_text_word_count);
         mBraveSyncWordCountTitle.setText(getString(R.string.brave_sync_word_count_text, 0));
